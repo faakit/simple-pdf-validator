@@ -5,7 +5,10 @@
  * @returns {true} when the file is a valid PDF
  * @throws {Error} when the file is not a valid PDF
  */
-export function checkPdf(file, maximumSize = undefined) {
+export function checkPdf(
+  file: Express.Multer.File,
+  maximumSize?: number
+): true {
   if (!!maximumSize && file.size > maximumSize) {
     throw new Error("File too large");
   }
