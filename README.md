@@ -30,14 +30,21 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { checkPdf } from 'pdf-validator'
 
 @Controller()
-export class ExamsController {
+export class UploadController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
     checkPdf(file);
 
     return { message: 'File uploaded successfully' };
   }
 }
 ```
+
+## Explanation
+
+It works by checking some things:
+1. File size (if max provided)
+2. Mimetype
+3. Pdf version at start of file
+4. Ensure the EOF is actually the end of the file (7 chars for some versions, 6 chars for others.)
